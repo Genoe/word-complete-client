@@ -1,13 +1,99 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #e6ecf0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+/* nav */
+
+.navbar {
+  margin-bottom: 1rem;
+}
+
+.navbar a {
+  font-weight: bold;
+  color: white;
+}
+
+.navbar a:hover {
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.navbar-brand > img {
+  display: inline-block;
+  width: 20px;
+  margin-bottom: 2px;
+  margin-right: 5px;
+  border-radius: 2px;
+}
+
+ul.nav.navbar-nav li {
+  margin: 0 0.5rem;
+}
+
+.onboarding > .navbar {
+  background-image: url("./images/nav-bg.png");
+  background-size: 100% 100%;
+}
+
+.home-hero {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+  background-image: url("./images/brett-jordan-POMpXtcVYHo-unsplash.jpg");
+  text-align: center;
+  padding: 1rem;
+  background-position: center center;
+  background-size: cover;
+  color: #fff;
+  text-shadow: 0px 0 12px #000000;
+}
+
+.navbar-header {
+  margin: 0 auto;
+}
+
+.navbar-brand {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.unsplash-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.unsplash-credits {
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  padding: 4px 6px;
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.2;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+.unsplash-credits span {
+  display: inline-block;
+  padding: 2px 3px;
+}
+
+.unsplash-credits svg {
+  height: 12px;
+  width: auto;
+  position: relative;
+  vertical-align: middle;
+  top: -2px;
+  fill: white;
 }
