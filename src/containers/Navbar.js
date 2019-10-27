@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {logout} from '../store/actions/auth';
 
 class Navbar extends Component {
-
+    logout = e => {
+        e.preventDefault();
+        this.props.logout();
+    }
+    
     render() {
         return (
             <nav className="navbar navbar-expand">
@@ -10,7 +16,7 @@ class Navbar extends Component {
                     <Link to="/" className="navbar-brand">
                         Word Complete
                     </Link>
-                    {/* {this.props.currentUser.isAuthenticated */ false ? (
+                    {this.props.currentUser.isAuthenticated ? (
                         <ul className="nav navbar-nav navbar-right">
                             <li>
                                 <a onClick={this.logout}>Log out</a>
@@ -33,4 +39,10 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser
+    };
+}
+
+export default connect(mapStateToProps, {logout})(Navbar);
