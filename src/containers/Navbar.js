@@ -8,7 +8,7 @@ class Navbar extends Component {
         e.preventDefault();
         this.props.logout();
     }
-    
+
     render() {
         return (
             <nav className="navbar navbar-expand">
@@ -18,6 +18,9 @@ class Navbar extends Component {
                     </Link>
                     {this.props.currentUser.isAuthenticated ? (
                         <ul className="nav navbar-nav navbar-right">
+                            <li>
+                                <Link to={`/users/${this.props.currentUser.user.id}/account`} >Manage Account</Link>
+                            </li>
                             <li>
                                 <a onClick={this.logout}>Log out</a>
                             </li>

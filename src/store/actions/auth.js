@@ -38,3 +38,27 @@ export function authUser(type, userData) {
         });
     };
 }
+
+export function putNewUsername(newUsername) {
+    return (dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+            const { currentUser } = getState();
+            const id = currentUser.user.id;
+
+            return apiCall('put', `/api/users/${id}/account`, {
+                username: newUsername
+            })
+            .then(({token, ...user}) => {
+                localStorage.setItem('jwtToken', token);
+                setAuthorizationToken(token);
+                dispatch(setCurrentUser(user));
+                dispatch(removeError());
+                resolve();
+            })
+            .catch(err => {
+                dispatch(addError(err.message));
+                reject(); // indicate the API call failed
+            });
+        })
+    }
+}
