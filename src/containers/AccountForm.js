@@ -12,9 +12,13 @@ class MessageForm extends Component {
 
     handleNewUsername = event => {
         event.preventDefault();
-        this.props.putNewUsername(this.state.newUsername);
-        this.setState({newUsername: ''});
-        this.props.history.push('/');
+        this.props.putNewUsername(this.state.newUsername).then(() => {
+            this.setState({newUsername: ''});
+            this.props.history.push('/');
+        })
+        .catch(() => {
+            return;
+        });
     };
 
     // making a inline function for onChange instead of a generic handleChange function since we only have one input (for the sake of conciseness)
@@ -22,7 +26,7 @@ class MessageForm extends Component {
         return (
             <form onSubmit={this.handleNewUsername}>
                 {this.props.errors.message && (
-                    <div className="alert alert-danger">{this.props.errors}</div>
+                    <div className="alert alert-danger">{this.props.errors.message.join(', ')}</div>
                 )}
                 <input
                     type="text"
