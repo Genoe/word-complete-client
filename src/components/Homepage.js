@@ -35,7 +35,7 @@ const Homepage = ({ currentUser }) => {
 
     return (
         <div>
-            <h1>YOU ARE LOGGED IN KUPO!</h1>
+            <h1>YOU ARE LOGGED IN {currentUser.user.username}!</h1>
         </div>
     )
 }
