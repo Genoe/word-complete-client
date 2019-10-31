@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {putNewUsername} from '../store/actions/auth';
 
-class MessageForm extends Component {
+class AccountForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,4 +48,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, {putNewUsername})(MessageForm);
+export default connect(mapStateToProps, {putNewUsername})(AccountForm);
