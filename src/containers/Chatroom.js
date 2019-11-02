@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { subscribeToChat, emitMessage, emitUsername, subscribeToMatchingService, subscribeToMatchFound } from '../services/socket';
+import { subscribeToChat, emitMessage, emitUsername, subscribeToMatchingService, subscribeToMatchFound, subscribeToOppDiscnt } from '../services/socket';
 
 import Message from '../components/Message.js';
+
+const DEFAULT_USER = 'Wyatt Weisensel (Word Complete Creator)';
 
 class Chatroom extends React.Component {
     constructor(props) {
@@ -11,13 +13,13 @@ class Chatroom extends React.Component {
 
         this.state = {
             chats: [{
-                username: 'Wyatt Weisensel (Word Complete Creator)',
-                content:'Welcome to a new game!',
+                username: DEFAULT_USER,
+                content:'Welcome to a new game!!',
             }],
 
-            opponentUsername: 'Wyatt Weisensel (Word Complete Creator)'
         };
 
+        this.opponentUsername = DEFAULT_USER;
     }
 
     componentDidMount() {
@@ -32,19 +34,28 @@ class Chatroom extends React.Component {
             }
 
             this.setState({
-                chats: this.state.chats.concat({username: this.state.opponentUsername, content: msg}),
+                chats: this.state.chats.concat({username: this.opponentUsername, content: msg}),
             });
         });
 
         subscribeToChat((err, msg) => this.setState({
             // timestamp
-            chats: this.state.chats.concat({username: this.state.opponentUsername, content: msg}),
+            chats: this.state.chats.concat({username: this.opponentUsername, content: msg}),
         }));
 
-        subscribeToMatchFound((err, msg) => this.setState({
-            opponentUsername: msg
-        }));
-        // TODO: set opponentUsername back to default when other player disconnects
+        subscribeToMatchFound((err, msg) => this.opponentUsername = msg);
+
+        subscribeToOppDiscnt((err, msg) => {
+            this.setState({
+                chats: this.state.chats.concat({
+                    username: DEFAULT_USER,
+                    content: `${this.opponentUsername} has disconnected!`
+                }),
+            });
+
+            this.opponentUsername = DEFAULT_USER;
+        });
+
         emitUsername(this.props.currentUser.user.username);
     }
 
@@ -60,9 +71,11 @@ class Chatroom extends React.Component {
     submitMessage = (e) => {
         e.preventDefault();
 
+        emitMessage(ReactDOM.findDOMNode(this.refs.newWord).value);
+
         this.setState({
             chats: this.state.chats.concat([{
-                username: 'Wyatt Weisensel',
+                username: this.props.currentUser.user.username,
                 content: ReactDOM.findDOMNode(this.refs.newWord).value,
             }])
         }, () => {
@@ -71,7 +84,7 @@ class Chatroom extends React.Component {
     }
 
     render() {
-        const username = 'Wyatt Weisensel';
+        const username = this.props.currentUser.user.username;
         const { chats } = this.state;
 
         return (

@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://localhost:4000'); // TODO: How will this work in production?
+const socket = openSocket('http://192.168.2.103:4000'); // TODO: How will this work in production?
 
 // In chatroom.js, the method passed in adds the received message to the chat.
 // If that's all the event needs to do, it can go here
@@ -28,3 +28,6 @@ export function subscribeToMatchFound(cb) {
     socket.on('match found', msg => cb(null, msg));
 }
 
+export function subscribeToOppDiscnt(cb) {
+    socket.on('opponent disconnected', msg => cb(null, msg));
+}
