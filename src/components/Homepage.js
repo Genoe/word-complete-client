@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Chatroom from '../containers/Chatroom';
 
 const Homepage = ({ currentUser }) => {
     if (!currentUser.isAuthenticated) {
@@ -35,7 +36,7 @@ const Homepage = ({ currentUser }) => {
 
     return (
         <div>
-            <h1>YOU ARE LOGGED IN {currentUser.user.username}!</h1>
+            <Chatroom />
         </div>
     )
 }
