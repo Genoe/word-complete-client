@@ -1,15 +1,36 @@
 import React from 'react';
-import {Switch, Route, withRouter } from 'react-router-dom';
+import {Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import Homepage from '../components/Homepage';
 import AuthForm from '../components/AuthForm';
 import {authUser} from '../store/actions/auth';
 import {removeError} from '../store/actions/errors';
-import withAuth from '../hocs/withAuth';
 import AccountForm from './AccountForm';
 
 const Main = props => {
     const {authUser, errors, removeError, currentUser} = props;
+
+    // A wrapper for <Route> that redirects to the login
+    // screen if you're not yet authenticated.
+    function PrivateRoute({ children, ...rest }) {
+        return (
+        <Route
+            {...rest}
+            render={({ location }) =>
+            currentUser.isAuthenticated ? (
+                children
+            ) : (
+                <Redirect
+                to={{
+                    pathname: "/signin",
+                    state: { from: location }
+                }}
+                />
+            )
+            }
+        />
+        );
+    }
 
     return (
         <div className="container">
@@ -45,10 +66,13 @@ const Main = props => {
                         />
                     );
                 }} />
-                <Route
+                {/* <Route
                     path="/users/:id/account"
                     component={(withAuth(AccountForm))}
-                />       
+                />        */}
+                <PrivateRoute  path="/users/:id/account"> 
+                    <AccountForm {...props}/>
+                </PrivateRoute>
             </Switch>
         </div>
     );
