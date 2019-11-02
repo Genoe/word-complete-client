@@ -25,8 +25,7 @@ class AccountForm extends Component {
             
             this.props.history.push('/');
         })
-        .catch((e) => {
-            console.log(e);
+        .catch(() => {
             return;
         });
     }
