@@ -16,6 +16,7 @@ class Navbar extends Component {
                     <Link to="/" className="navbar-brand">
                         Word Complete
                     </Link>
+                    {this.props.currentUser.user.username}
                     {this.props.currentUser.isAuthenticated ? (
                         <ul className="nav navbar-nav navbar-right">
                             <li>
