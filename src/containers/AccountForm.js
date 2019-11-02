@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {putNewUsername} from '../store/actions/auth';
 
 class AccountForm extends Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -10,16 +12,28 @@ class AccountForm extends Component {
         };
     }
 
+    componentDidMount() {
+        this._isMounted = true;
+    }
+
     handleNewUsername = event => {
         event.preventDefault();
         this.props.putNewUsername(this.state.newUsername).then(() => {
-            this.setState({newUsername: ''});
+            if (this._isMounted) {
+                this.setState({newUsername: ''});
+            }
+            
             this.props.history.push('/');
         })
-        .catch(() => {
+        .catch((e) => {
+            console.log(e);
             return;
         });
-    };
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     // making a inline function for onChange instead of a generic handleChange function since we only have one input (for the sake of conciseness)
     render() {
