@@ -66,10 +66,7 @@ const Main = props => {
                         />
                     );
                 }} />
-                {/* <Route
-                    path="/users/:id/account"
-                    component={(withAuth(AccountForm))}
-                />        */}
+                
                 <PrivateRoute  path="/users/:id/account"> 
                     <AccountForm {...props}/>
                 </PrivateRoute>
