@@ -1,7 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { subscribeToChat, emitMessage, emitUsername, subscribeToMatchingService, subscribeToMatchFound, subscribeToOppDiscnt } from '../services/socket';
+import { 
+    subscribeToChat, 
+    emitMessage, 
+    emitUsername, 
+    subscribeToMatchingService, 
+    subscribeToMatchFound, 
+    subscribeToOppDiscnt, 
+    disconnect 
+} from '../services/socket';
 
 import Message from '../components/Message.js';
 
@@ -23,6 +31,7 @@ class Chatroom extends React.Component {
     }
 
     componentDidMount() {
+        console.log('chatroom did mount');
         this.scrollToBot();
 
         // After a username has been sent back to the server, wait for a match
@@ -60,7 +69,13 @@ class Chatroom extends React.Component {
     }
 
     componentDidUpdate() {
+        console.log('chatroom did update');
         this.scrollToBot();
+    }
+
+    componentWillUnmount() {
+        console.log('chatroom will unmount');
+        disconnect();
     }
 
     scrollToBot = () => {
