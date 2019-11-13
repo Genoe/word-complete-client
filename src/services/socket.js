@@ -45,3 +45,7 @@ export function subscribeToOppDiscnt(cb) {
 export function disconnect() {
   socket.disconnect();
 }
+
+export function connectChat() {
+  socket.connect(URL);
+}

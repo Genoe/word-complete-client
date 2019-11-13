@@ -8,7 +8,8 @@ import {
     subscribeToMatchingService, 
     subscribeToMatchFound, 
     subscribeToOppDiscnt, 
-    disconnect 
+    disconnect,
+    connectChat,
 } from '../services/socket';
 
 import Message from '../components/Message.js';
@@ -30,12 +31,17 @@ class Chatroom extends React.Component {
         this.opponentUsername = DEFAULT_USER;
     }
 
+    setUpSocketIO() {
+
+       
+    }
+
     componentDidMount() {
         console.log('chatroom did mount');
         this.scrollToBot();
 
-        // After a username has been sent back to the server, wait for a match
-        subscribeToMatchingService((err, msg) => {
+         // After a username has been sent back to the server, wait for a match
+         subscribeToMatchingService((err, msg) => {
             if (err) {
                 this.setState({
                     chats: this.state.chats.concat(JSON.stringify(err)),
@@ -70,6 +76,8 @@ class Chatroom extends React.Component {
             });
 
             this.opponentUsername = DEFAULT_USER;
+
+            disconnect();
         });
 
         emitUsername(this.props.currentUser.user.username);
@@ -106,7 +114,13 @@ class Chatroom extends React.Component {
     }
 
     startNewGame = (e) => {
+        e.preventDefault();
+        connectChat();
+        emitUsername(this.props.currentUser.user.username);
 
+        this.setState({
+            showNewGameBtn: false,
+        });
     }
 
     render() {
