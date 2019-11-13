@@ -24,7 +24,7 @@ class Chatroom extends React.Component {
                 username: DEFAULT_USER,
                 content:'Welcome to a new game!!',
             }],
-
+            showNewGameBtn: false,
         };
 
         this.opponentUsername = DEFAULT_USER;
@@ -52,7 +52,13 @@ class Chatroom extends React.Component {
             chats: this.state.chats.concat({username: this.opponentUsername, content: msg}),
         }));
 
-        subscribeToMatchFound((err, msg) => this.opponentUsername = msg);
+        subscribeToMatchFound((err, msg) => {
+            this.setState({
+                showNewGameBtn: false,
+            });
+
+            this.opponentUsername = msg;
+        });
 
         subscribeToOppDiscnt((err, msg) => {
             this.setState({
@@ -60,6 +66,7 @@ class Chatroom extends React.Component {
                     username: DEFAULT_USER,
                     content: `${this.opponentUsername} has disconnected!`
                 }),
+                showNewGameBtn: true,
             });
 
             this.opponentUsername = DEFAULT_USER;
@@ -98,9 +105,28 @@ class Chatroom extends React.Component {
         });
     }
 
+    startNewGame = (e) => {
+
+    }
+
     render() {
         const username = this.props.currentUser.user.username;
-        const { chats } = this.state;
+        const { chats, showNewGameBtn } = this.state;
+        var form;
+
+        if (showNewGameBtn) {
+            form = 
+            <form className="form-inline justify-content-md-center" onSubmit={(e) => this.startNewGame(e)}>
+                <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value="New Game!" />
+            </form>
+        } else {
+            form = 
+                <form className="form-inline justify-content-md-center" onSubmit={(e) => this.submitMessage(e)}>
+                    <label className="sr-only" htmlFor="newWord">New Word</label>
+                    <input type="text" className="form-control mb-2 mr-sm-2" id="newWord" placeholder="Enter a word!" ref="newWord" />
+                    <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value="Submit" />
+                </form>
+        }
 
         return (
             <div>
@@ -113,11 +139,8 @@ class Chatroom extends React.Component {
                     }
                 </ul>
                 <br />
-                <form className="form-inline justify-content-md-center" onSubmit={(e) => this.submitMessage(e)}>
-                    <label className="sr-only" htmlFor="newWord">New Word</label>
-                    <input type="text" className="form-control mb-2 mr-sm-2" id="newWord" placeholder="Enter a word!" ref="newWord" />
-                    <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value="Submit" />
-                </form>
+                
+                {form}
             </div>
         );
     }
