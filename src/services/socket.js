@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
 
-const URL = 'http://192.168.2.103:4000';
+const URL = 'http://192.168.2.103:8081';
 
 const socket = openSocket(URL); // TODO: How will this work in production?
 
