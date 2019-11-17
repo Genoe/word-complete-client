@@ -114,17 +114,14 @@ class Chatroom extends React.Component {
 
         emitMessage(ReactDOM.findDOMNode(this.refs.newWord).value, () => {
             this.setState({
-                isTurn: !this.state.isTurn
+                isTurn: !this.state.isTurn,
+                chats: this.state.chats.concat([{
+                    username: this.props.currentUser.user.username,
+                    content: ReactDOM.findDOMNode(this.refs.newWord).value.toLowerCase(),
+                }]),
+            }, () => {
+                ReactDOM.findDOMNode(this.refs.newWord).value = '';
             });
-        });
-
-        this.setState({
-            chats: this.state.chats.concat([{
-                username: this.props.currentUser.user.username,
-                content: ReactDOM.findDOMNode(this.refs.newWord).value,
-            }])
-        }, () => {
-            ReactDOM.findDOMNode(this.refs.newWord).value = '';
         });
     }
 
