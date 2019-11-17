@@ -26,6 +26,7 @@ class Chatroom extends React.Component {
                 content:'Welcome to a new game!!',
             }],
             showNewGameBtn: false,
+            waitingforOpp: false,
         };
 
         this.opponentUsername = DEFAULT_USER;
@@ -56,14 +57,16 @@ class Chatroom extends React.Component {
         subscribeToChat((err, msg) => this.setState({
             // timestamp
             chats: this.state.chats.concat({username: this.opponentUsername, content: msg}),
+            waitingforOpp: !this.state.waitingforOpp
         }));
 
         subscribeToMatchFound((err, msg) => {
             this.setState({
                 showNewGameBtn: false,
+                waitingforOpp: msg.goFirst
             });
 
-            this.opponentUsername = msg;
+            this.opponentUsername = msg.oppUsername;
         });
 
         subscribeToOppDiscnt((err, msg) => {
@@ -101,7 +104,11 @@ class Chatroom extends React.Component {
     submitMessage = (e) => {
         e.preventDefault();
 
-        emitMessage(ReactDOM.findDOMNode(this.refs.newWord).value);
+        emitMessage(ReactDOM.findDOMNode(this.refs.newWord).value, () => {
+            this.setState({
+                waitingforOpp: !this.state.waitingforOpp
+            });
+        });
 
         this.setState({
             chats: this.state.chats.concat([{
@@ -125,7 +132,7 @@ class Chatroom extends React.Component {
 
     render() {
         const username = this.props.currentUser.user.username;
-        const { chats, showNewGameBtn } = this.state;
+        const { chats, showNewGameBtn, waitingforOpp } = this.state;
         var form;
 
         if (showNewGameBtn) {
@@ -138,7 +145,7 @@ class Chatroom extends React.Component {
                 <form className="form-inline justify-content-md-center" onSubmit={(e) => this.submitMessage(e)}>
                     <label className="sr-only" htmlFor="newWord">New Word</label>
                     <input type="text" className="form-control mb-2 mr-sm-2" id="newWord" placeholder="Enter a word!" ref="newWord" />
-                    <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value="Submit" />
+                    <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value="Submit" disabled={waitingforOpp}/>
                 </form>
         }
 

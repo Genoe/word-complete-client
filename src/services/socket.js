@@ -21,9 +21,10 @@ export function subscribeToMatchingService(cb) {
   socket.on('pending', msg => cb(null, msg));
 }
 
-// send out a chat message
-export function emitMessage(msg) {
+export function emitMessage(msg, cb) {
   socket.emit('chat message', msg);
+
+  cb();
 }
 
 // send out the username
