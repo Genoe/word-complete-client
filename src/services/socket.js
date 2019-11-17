@@ -42,6 +42,10 @@ export function subscribeToOppDiscnt(cb) {
     socket.on('opponent disconnected', msg => cb(null, msg));
 }
 
+export function subscribeToBadWord(cb) {
+  socket.on('bad word', msg => cb(null, msg));
+}
+
 // when the chatroom is unmounted (naviaged away from) then disconnect
 export function disconnect() {
   socket.disconnect();
