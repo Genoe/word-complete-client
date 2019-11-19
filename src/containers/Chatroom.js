@@ -11,6 +11,7 @@ import {
     disconnect,
     connectChat,
     subscribeToBadWord,
+    subscribeToGameOver,
 } from '../services/socket';
 
 import Message from '../components/Message.js';
@@ -89,6 +90,20 @@ class Chatroom extends React.Component {
                 chats: this.state.chats.concat({username: this.opponentUsername, content: msgObj.msg}),
                 isTurn: msgObj.isTurn
             });
+        });
+
+        subscribeToGameOver((err, msgObj) => {
+            this.setState({
+                chats: this.state.chats.concat({
+                    username: DEFAULT_USER,
+                    content: msgObj.msg
+                }),
+                showNewGameBtn: true,
+            });
+
+            this.opponentUsername = DEFAULT_USER;
+
+            disconnect();
         });
 
         emitUsername(this.props.currentUser.user.username);

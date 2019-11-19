@@ -46,6 +46,11 @@ export function subscribeToBadWord(cb) {
   socket.on('bad word', msg => cb(null, msg));
 }
 
+// server informs the game is over. Disconnect and allow the player to start a new game
+export function subscribeToGameOver(cb) {
+  socket.on('game over', msg => cb(null, msg));
+}
+
 // when the chatroom is unmounted (naviaged away from) then disconnect
 export function disconnect() {
   socket.disconnect();
