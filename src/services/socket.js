@@ -1,8 +1,6 @@
 import openSocket from 'socket.io-client';
 
-const URL = 'http://192.168.2.103:8081';
-
-const socket = openSocket(URL); // TODO: How will this work in production?
+const socket = openSocket();
 
 // In chatroom.js, the method passed in adds the received message to the chat.
 // If that's all the event needs to do, it can go here
