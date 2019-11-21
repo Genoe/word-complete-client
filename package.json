@@ -7,6 +7,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "react": "^16.11.0",
+    "react-app-polyfill": "^1.0.4",
     "react-dom": "^16.11.0",
     "react-moment": "^0.9.6",
     "react-redux": "^7.1.1",
@@ -30,7 +31,8 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ie 9-11"
     ],
     "development": [
       "last 1 chrome version",
