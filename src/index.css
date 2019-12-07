@@ -64,36 +64,9 @@ ul.nav.navbar-nav li {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
-.unsplash-container {
+.github-links {
   position: absolute;
   bottom: 0;
   right: 0;
   padding: 10px;
-}
-
-.unsplash-credits {
-  background-color: black;
-  color: white;
-  text-decoration: none;
-  padding: 4px 6px;
-  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Ubuntu, Roboto, Noto, "Segoe UI", Arial, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1.2;
-  display: inline-block;
-  border-radius: 3px;
-}
-
-.unsplash-credits span {
-  display: inline-block;
-  padding: 2px 3px;
-}
-
-.unsplash-credits svg {
-  height: 12px;
-  width: auto;
-  position: relative;
-  vertical-align: middle;
-  top: -2px;
-  fill: white;
 }
