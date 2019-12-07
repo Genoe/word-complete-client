@@ -23,10 +23,7 @@ class Chatroom extends React.Component {
         super(props);
 
         this.state = {
-            chats: [{
-                username: DEFAULT_USER,
-                content:'Welcome to a new game!!',
-            }],
+            chats: [],
             showNewGameBtn: false,
             isTurn: false,
         };
@@ -148,6 +145,13 @@ class Chatroom extends React.Component {
     render() {
         const username = this.props.currentUser.user.username;
         const { chats, showNewGameBtn, isTurn } = this.state;
+        const rules = {
+            username: DEFAULT_USER,
+            content: `Welcome to a new game!! After an opponent is found, one player will say a word.
+            Then the other player responds with a word that begins with the ending letter of the previous word.
+            For example: Dog -> Goat -> Taco -> Orange -> Ear. Words are not case sensitive.
+            Words cannot be repeated. After three mistakes, the other player wins.`
+        }
         var form;
 
         if (showNewGameBtn) {
@@ -160,7 +164,7 @@ class Chatroom extends React.Component {
                 <form className="form-inline justify-content-md-center" onSubmit={(e) => this.submitMessage(e)}>
                     <label className="sr-only" htmlFor="newWord">New Word</label>
                     <input type="text" className="form-control mb-2 mr-sm-2" id="newWord" placeholder="Enter a word!" ref="newWord" />
-                    <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value="Submit" disabled={!isTurn}/>
+                    <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value={isTurn ? 'Submit' : 'Please Wait'} disabled={!isTurn}/>
                 </form>
         }
 
@@ -168,9 +172,10 @@ class Chatroom extends React.Component {
             <div>
                 <h3 className="text-center">Let's Play!</h3>
                 <ul className="list-group" ref="chats">
+                <Message chat={rules} user={username} key={0} appMsg={true}/>
                     {
                         chats.map((chat, i) => 
-                            <Message chat={chat} user={username} key={i}/>
+                            <Message chat={chat} user={username} key={i + 1} appMsg={false}/>
                         )
                     }
                 </ul>
