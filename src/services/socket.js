@@ -1,22 +1,28 @@
 import openSocket from 'socket.io-client';
 
-const socket = openSocket();
+let socket;
 
 // In chatroom.js, the method passed in adds the received message to the chat.
 // If that's all the event needs to do, it can go here
 export function subscribeToChat(cb) {
   socket.on('chat message', msg => cb(null, msg));
-  // socket.emit('chat message', msg);
-  // socket.on('pending', msg => cb(null, msg));
 }
 
 // establish a connection with the server
 export function subscribeToMatchingService(cb) {
-  if (socket.disconnected) {
-    socket.connect(URL);
-  }
+  socket = openSocket({
+    transportOptions: {
+      polling: {
+        extraHeaders: {
+          Authorization: `Bearer ${localStorage.getItem('jwtToken')}`
+        }
+      }
+    }
+  });
 
   socket.on('pending', msg => cb(null, msg));
+
+  socket.on('error', msg => console.log(JSON.stringify(msg)));
 }
 
 export function emitMessage(msg, cb) {
@@ -55,5 +61,5 @@ export function disconnect() {
 }
 
 export function connectChat() {
-  socket.connect(URL);
+  socket.connect();
 }

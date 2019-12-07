@@ -33,12 +33,7 @@ class Chatroom extends React.Component {
 
         this.opponentUsername = DEFAULT_USER;
     }
-
-    setUpSocketIO() {
-
-       
-    }
-
+    
     componentDidMount() {
         console.log('chatroom did mount');
         this.scrollToBot();
