@@ -152,7 +152,13 @@ class Chatroom extends React.Component {
             For example: Dog -> Goat -> Taco -> Orange -> Ear. Words are not case sensitive.
             Words cannot be repeated. After three mistakes, the other player wins.`
         }
-        var form;
+        const jpnRules = {
+            username: DEFAULT_USER,
+            content: `新しいゲームへようこそ!! 対戦相手が見つかった後、1人のプレイヤーが単語を言うと、
+            他のプレイヤーは前の単語の終了文字で始まる単語で応答します。 例：Dog -> Goat -> Taco -> Orange -> Ear.。 
+            単語は大文字と小文字を区別しません。 言葉を繰り返すことはできません。 3つのミスの後、他のプレイヤーが勝ちます。`
+        }
+        let form;
 
         if (showNewGameBtn) {
             form = 
@@ -173,9 +179,10 @@ class Chatroom extends React.Component {
                 <h3 className="text-center">Let's Play!</h3>
                 <ul className="list-group" ref="chats">
                 <Message chat={rules} user={username} key={0} appMsg={true}/>
+                <Message chat={jpnRules} user={username} key={1} appMsg={true}/>
                     {
                         chats.map((chat, i) => 
-                            <Message chat={chat} user={username} key={i + 1} appMsg={false}/>
+                            <Message chat={chat} user={username} key={i + 2} appMsg={false}/>
                         )
                     }
                 </ul>
