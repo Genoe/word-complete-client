@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { 
     subscribeToChat, 
     emitMessage, 
-    emitUsername, 
+    emitUsername,
+    emitTimerEnd, 
     subscribeToMatchingService, 
     subscribeToMatchFound, 
     subscribeToOppDiscnt, 
@@ -14,7 +15,8 @@ import {
     subscribeToGameOver,
 } from '../services/socket';
 
-import Message from '../components/Message.js';
+import Message from '../components/Message';
+import Timer from './Timer';
 
 const DEFAULT_USER = 'Wyatt Weisensel (Word Complete Creator)';
 
@@ -57,7 +59,7 @@ class Chatroom extends React.Component {
         subscribeToMatchFound((err, msgObj) => {
             this.setState({
                 showNewGameBtn: false,
-                isTurn: msgObj.isTurn
+                isTurn: msgObj.isTurn,
             });
 
             this.opponentUsername = msgObj.oppUsername;
@@ -142,6 +144,10 @@ class Chatroom extends React.Component {
         });
     }
 
+    timerEnd = () => {
+        emitTimerEnd();
+    }
+
     render() {
         const username = this.props.currentUser.user.username;
         const { chats, showNewGameBtn, isTurn } = this.state;
@@ -177,6 +183,9 @@ class Chatroom extends React.Component {
         return (
             <div>
                 <h3 className="text-center">Let's Play!</h3>
+                {isTurn &&
+                    <Timer timerEnd={this.timerEnd}></Timer>
+                }                
                 <ul className="list-group" ref="chats">
                 <Message chat={rules} user={username} key={0} appMsg={true}/>
                 <Message chat={jpnRules} user={username} key={1} appMsg={true}/>

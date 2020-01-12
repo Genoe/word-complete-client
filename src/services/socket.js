@@ -63,3 +63,7 @@ export function disconnect() {
 export function connectChat() {
   socket.connect();
 }
+
+export function emitTimerEnd() {
+  socket.emit('timer end');
+}
