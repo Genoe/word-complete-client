@@ -183,9 +183,10 @@ class Chatroom extends React.Component {
         return (
             <div>
                 <h3 className="text-center">Let's Play!</h3>
-                {isTurn &&
-                    <Timer timerEnd={this.timerEnd}></Timer>
-                }                
+                {isTurn && 
+                    <Timer timerEnd={this.timerEnd}></Timer> 
+                }
+                               
                 <ul className="list-group" ref="chats">
                 <Message chat={rules} user={username} key={0} appMsg={true}/>
                 <Message chat={jpnRules} user={username} key={1} appMsg={true}/>

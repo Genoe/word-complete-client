@@ -31,11 +31,8 @@ export default class Timer extends Component {
     render() {
         const { seconds } = this.state
         return (
-            <div>
-                { seconds === 0
-                    ? <h1>Busted!</h1>
-                    : <h1>Time Remaining: {String(seconds).padStart(2, 0)}</h1>
-                }
+            <div id="timer">
+                <span id="timertext">{String(seconds).padStart(2, 0)}</span>
             </div>
         );
     }
