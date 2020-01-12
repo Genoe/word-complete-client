@@ -70,26 +70,3 @@ ul.nav.navbar-nav li {
   right: 0;
   padding: 10px;
 }
-
-#timer {
-  height: 100px;
-  width: 100px;
-  position: absolute;
-  left: 50%;
-  margin-left: -50px;
-  margin-top: -50px;
-  z-index: 1;
-}
-
-#timertext {
-  /* float: left; */
-  text-align: center;
-  font-size: 84px;
-  margin: 0 2.5%;
-  color: #fff;
-  padding: 20px;
-  width: 20%;
-  border-radius: 20px;
-  box-sizing: border-box;
-  background: #00ff88;
-}

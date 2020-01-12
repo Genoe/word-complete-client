@@ -16,7 +16,7 @@ import {
 } from '../services/socket';
 
 import Message from '../components/Message';
-import Timer from './Timer';
+import Timer from './timer/Timer';
 
 const DEFAULT_USER = 'Wyatt Weisensel (Word Complete Creator)';
 
@@ -25,7 +25,7 @@ class Chatroom extends React.Component {
         super(props);
 
         this.state = {
-            chats: [],
+            chats: [{username: 'billy', content: 'cows'}, {username: 'billy', content: 'cows'}, {username: 'billy', content: 'cows'}],
             showNewGameBtn: false,
             isTurn: false,
         };
@@ -185,7 +185,7 @@ class Chatroom extends React.Component {
         return (
             <div>
                 <h3 className="text-center">Let's Play!</h3>
-                {isTurn && 
+                {isTurn &&
                     <Timer timerEnd={this.timerEnd}></Timer> 
                 }
                                
