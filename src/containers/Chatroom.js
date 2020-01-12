@@ -72,6 +72,7 @@ class Chatroom extends React.Component {
                     content: `${this.opponentUsername} has disconnected!`
                 }),
                 showNewGameBtn: true,
+                isTurn: false,
             });
 
             this.opponentUsername = DEFAULT_USER;
@@ -93,6 +94,7 @@ class Chatroom extends React.Component {
                     content: msgObj.msg
                 }),
                 showNewGameBtn: true,
+                isTurn: false,
             });
 
             this.opponentUsername = DEFAULT_USER;
