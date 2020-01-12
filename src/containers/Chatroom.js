@@ -25,8 +25,8 @@ class Chatroom extends React.Component {
         super(props);
 
         this.state = {
-            chats: [{username: 'billy', content: 'cows'}, {username: 'billy', content: 'cows'}, {username: 'billy', content: 'cows'}],
-            showNewGameBtn: false,
+            chats: [],
+            showNewGameBtn: true,
             isTurn: false,
         };
 
@@ -36,9 +36,46 @@ class Chatroom extends React.Component {
     componentDidMount() {
         console.log('chatroom did mount');
         this.scrollToBot();
+    }
 
-         // After a username has been sent back to the server, wait for a match
-         subscribeToMatchingService((err, msg) => {
+    componentDidUpdate() {
+        console.log('chatroom did update');
+        this.scrollToBot();
+    }
+
+    componentWillUnmount() {
+        console.log('chatroom will unmount');
+        disconnect();
+    }
+
+    scrollToBot = () => {
+        var scrollingElement = (document.scrollingElement || document.body); /* you could provide your scrolling element with react ref */
+        scrollingElement.scrollTop = scrollingElement.scrollHeight;
+    }
+
+    submitMessage = (e) => {
+        e.preventDefault();
+
+        emitMessage(ReactDOM.findDOMNode(this.refs.newWord).value, () => {
+            this.setState({
+                isTurn: !this.state.isTurn,
+                chats: this.state.chats.concat([{
+                    username: this.props.currentUser.user.username,
+                    content: ReactDOM.findDOMNode(this.refs.newWord).value.toLowerCase(),
+                }]),
+            }, () => {
+                ReactDOM.findDOMNode(this.refs.newWord).value = '';
+            });
+        });
+    }
+
+    startNewGame = (e) => {
+        e.preventDefault();
+        // connectChat();
+        // emitUsername(this.props.currentUser.user.username);
+
+        // After a username has been sent back to the server, wait for a match
+        subscribeToMatchingService((err, msg) => {
             if (err) {
                 this.setState({
                     chats: this.state.chats.concat(JSON.stringify(err)),
@@ -47,6 +84,7 @@ class Chatroom extends React.Component {
 
             this.setState({
                 chats: this.state.chats.concat({username: this.opponentUsername, content: msg}),
+                showNewGameBtn: false,
             });
         });
 
@@ -61,7 +99,7 @@ class Chatroom extends React.Component {
                 showNewGameBtn: false,
                 isTurn: msgObj.isTurn,
             });
-
+            console.log('WHOS TURN', msgObj.isTurn);
             this.opponentUsername = msgObj.oppUsername;
         });
 
@@ -103,47 +141,6 @@ class Chatroom extends React.Component {
         });
 
         emitUsername(this.props.currentUser.user.username);
-    }
-
-    componentDidUpdate() {
-        console.log('chatroom did update');
-        this.scrollToBot();
-    }
-
-    componentWillUnmount() {
-        console.log('chatroom will unmount');
-        disconnect();
-    }
-
-    scrollToBot = () => {
-        var scrollingElement = (document.scrollingElement || document.body); /* you could provide your scrolling element with react ref */
-        scrollingElement.scrollTop = scrollingElement.scrollHeight;
-    }
-
-    submitMessage = (e) => {
-        e.preventDefault();
-
-        emitMessage(ReactDOM.findDOMNode(this.refs.newWord).value, () => {
-            this.setState({
-                isTurn: !this.state.isTurn,
-                chats: this.state.chats.concat([{
-                    username: this.props.currentUser.user.username,
-                    content: ReactDOM.findDOMNode(this.refs.newWord).value.toLowerCase(),
-                }]),
-            }, () => {
-                ReactDOM.findDOMNode(this.refs.newWord).value = '';
-            });
-        });
-    }
-
-    startNewGame = (e) => {
-        e.preventDefault();
-        connectChat();
-        emitUsername(this.props.currentUser.user.username);
-
-        this.setState({
-            showNewGameBtn: false,
-        });
     }
 
     timerEnd = () => {
