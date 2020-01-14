@@ -154,13 +154,15 @@ class Chatroom extends React.Component {
             content: `Welcome to a new game!! After an opponent is found, one player will say a word.
             Then the other player responds with a word that begins with the ending letter of the previous word.
             For example: Dog -> Goat -> Taco -> Orange -> Ear. Words are not case sensitive.
-            Words cannot be repeated. After three mistakes, the other player wins.`
+            Words cannot be repeated. After three mistakes, the other player wins. Each turn lasts 30 seconds.
+            If you run out of time, it becomes the other players turn.`
         }
         const jpnRules = {
             username: DEFAULT_USER,
             content: `新しいゲームへようこそ!! 対戦相手が見つかった後、1人のプレイヤーが単語を言うと、
             他のプレイヤーは前の単語の終了文字で始まる単語で応答します。 例：Dog -> Goat -> Taco -> Orange -> Ear.。 
-            単語は大文字と小文字を区別しません。 言葉を繰り返すことはできません。 3つのミスの後、他のプレイヤーが勝ちます。`
+            単語は大文字と小文字を区別しません。 言葉を繰り返すことはできません。 3つのミスの後、他のプレイヤーが勝ちます。
+            各ターンは30秒続きます。時間を使い果たすと、他のプレイヤーがターンします。`
         }
         let form;
 
