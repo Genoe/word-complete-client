@@ -10,7 +10,6 @@ import {
     subscribeToMatchFound, 
     subscribeToOppDiscnt, 
     disconnect,
-    connectChat,
     subscribeToBadWord,
     subscribeToGameOver,
 } from '../services/socket';
