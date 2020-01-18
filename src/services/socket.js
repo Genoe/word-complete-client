@@ -57,7 +57,10 @@ export function subscribeToGameOver(cb) {
 
 // when the chatroom is unmounted (naviaged away from) then disconnect
 export function disconnect() {
-  socket.disconnect();
+  if (socket) {
+    socket.disconnect();
+  }
+  
 }
 
 export function emitTimerEnd() {
