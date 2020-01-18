@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './timer.css'
+// import './timer.css'
 
 export default class Timer extends Component {
     constructor(props) {
@@ -33,7 +33,7 @@ export default class Timer extends Component {
         const { seconds } = this.state
         return (
             <div id="timer">
-                <span id="timertext">{String(seconds).padStart(2, 0)}</span>
+                <p id="timertext" className="text-center">Time left: {String(seconds).padStart(2, 0)} seconds</p>
             </div>
         );
     }

@@ -15,7 +15,7 @@ import {
 } from '../services/socket';
 
 import Message from '../components/Message';
-import Timer from './timer/Timer';
+import Timer from './Timer';
 
 const DEFAULT_USER = 'Wyatt Weisensel (Word Complete Creator)';
 
@@ -182,11 +182,7 @@ class Chatroom extends React.Component {
 
         return (
             <div>
-                <h3 className="text-center">Let's Play!</h3>
-                {isTurn &&
-                    <Timer timerEnd={this.timerEnd}></Timer> 
-                }
-                               
+                <h3 className="text-center">Let's Play!</h3>         
                 <ul className="list-group" ref="chats">
                 <Message chat={rules} user={username} key={0} appMsg={true}/>
                 <Message chat={jpnRules} user={username} key={1} appMsg={true}/>
@@ -197,7 +193,7 @@ class Chatroom extends React.Component {
                     }
                 </ul>
                 <br />
-                
+                {isTurn && <Timer timerEnd={this.timerEnd}></Timer>} 
                 {form}
             </div>
         );
