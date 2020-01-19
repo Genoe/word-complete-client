@@ -28,46 +28,59 @@ class Chatroom extends React.Component {
             showNewGameBtn: true,
             isTurn: false,
             lives: 0,
+            word: '',
         };
 
         this.opponentUsername = DEFAULT_USER;
-    }
+    };
     
     componentDidMount() {
         console.log('chatroom did mount');
         this.scrollToBot();
-    }
+    };
 
     componentDidUpdate() {
         console.log('chatroom did update');
         this.scrollToBot();
-    }
+    };
 
     componentWillUnmount() {
         console.log('chatroom will unmount');
         disconnect();
-    }
+    };
 
     scrollToBot = () => {
         var scrollingElement = (document.scrollingElement || document.body); /* you could provide your scrolling element with react ref */
         scrollingElement.scrollTop = scrollingElement.scrollHeight;
-    }
+    };
+
+    handleWordInputChange = (e) => {
+        this.setState({ word: e.target.value });
+    };
+
+    canBeSubmitted = () => {
+        return this.state.word.length > 0;
+    };
 
     submitMessage = (e) => {
+        const { word } = this.state;
+
         e.preventDefault();
 
-        emitMessage(ReactDOM.findDOMNode(this.refs.newWord).value, () => {
-            this.setState({
-                isTurn: !this.state.isTurn,
-                chats: this.state.chats.concat([{
-                    username: this.props.currentUser.user.username,
-                    content: ReactDOM.findDOMNode(this.refs.newWord).value.toLowerCase(),
-                }]),
-            }, () => {
-                ReactDOM.findDOMNode(this.refs.newWord).value = '';
+        if (this.canBeSubmitted()) {
+            emitMessage(word, () => {
+                this.setState({
+                    isTurn: !this.state.isTurn,
+                    chats: this.state.chats.concat([{
+                        username: this.props.currentUser.user.username,
+                        content: word.toLowerCase(),
+                    }]),
+                }, () => {
+                    ReactDOM.findDOMNode(this.refs.newWord).value = '';
+                });
             });
-        });
-    }
+        }    
+    };
 
     startNewGame = (e) => {
         e.preventDefault();
@@ -149,11 +162,11 @@ class Chatroom extends React.Component {
         });
 
         emitUsername(this.props.currentUser.user.username);
-    }
+    };
 
     timerEnd = () => {
         emitTimerEnd();
-    }
+    };
 
     render() {
         const username = this.props.currentUser.user.username;
@@ -165,14 +178,14 @@ class Chatroom extends React.Component {
             For example: Dog -> Goat -> Taco -> Orange -> Ear. Words are not case sensitive.
             Words cannot be repeated. After three mistakes, the other player wins. Each turn lasts 30 seconds.
             If you run out of time, it becomes the other players turn.`
-        }
+        };
         const jpnRules = {
             username: DEFAULT_USER,
             content: `新しいゲームへようこそ!! 対戦相手が見つかった後、1人のプレイヤーが単語を言うと、
             他のプレイヤーは前の単語の終了文字で始まる単語で応答します。 例：Dog -> Goat -> Taco -> Orange -> Ear.。 
             単語は大文字と小文字を区別しません。 言葉を繰り返すことはできません。 3つのミスの後、他のプレイヤーが勝ちます。
             各ターンは30秒続きます。時間を使い果たすと、他のプレイヤーがターンします。`
-        }
+        };
         let form;
 
         if (showNewGameBtn) {
@@ -184,7 +197,7 @@ class Chatroom extends React.Component {
             form = 
                 <form className="form-inline justify-content-center" onSubmit={(e) => this.submitMessage(e)}>
                     <label className="sr-only" htmlFor="newWord">New Word</label>
-                    <input type="text" className="form-control mb-2 mr-sm-2" id="newWord" placeholder="Enter a word!" ref="newWord" />
+                    <input type="text" className="form-control mb-2 mr-sm-2" id="newWord" placeholder="Enter a word!" ref="newWord" onChange={this.handleWordInputChange} />
                     <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value={isTurn ? 'Submit' : 'Please Wait'} disabled={!isTurn}/>
                 </form>
         }
@@ -210,7 +223,7 @@ class Chatroom extends React.Component {
             </div>
         );
     }
-}
+};
 
 function mapStateToProps(state) {
     return {
