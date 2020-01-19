@@ -177,12 +177,12 @@ class Chatroom extends React.Component {
 
         if (showNewGameBtn) {
             form = 
-            <form className="form-inline justify-content-md-center" onSubmit={(e) => this.startNewGame(e)}>
+            <form className="form-inline justify-content-center" onSubmit={(e) => this.startNewGame(e)}>
                 <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value="New Game!" />
             </form>
         } else {
             form = 
-                <form className="form-inline justify-content-md-center" onSubmit={(e) => this.submitMessage(e)}>
+                <form className="form-inline justify-content-center" onSubmit={(e) => this.submitMessage(e)}>
                     <label className="sr-only" htmlFor="newWord">New Word</label>
                     <input type="text" className="form-control mb-2 mr-sm-2" id="newWord" placeholder="Enter a word!" ref="newWord" />
                     <input type="submit" className="btn btn-primary mb-2 mr-sm-2" value={isTurn ? 'Submit' : 'Please Wait'} disabled={!isTurn}/>
