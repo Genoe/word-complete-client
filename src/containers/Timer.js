@@ -10,21 +10,19 @@ export default class Timer extends Component {
     }
 
     componentDidMount() {
-        if (this.props.isTurn) {
-            this.myInterval = setInterval(() => {
-                const { seconds } = this.state
-    
-                if (seconds > 0) {
-                    this.setState(({ seconds }) => ({
-                        seconds: seconds - 1
-                    }));
-                }
-                if (seconds === 0) {
-                    this.props.timerEnd();
-                    clearInterval(this.myInterval)
-                } 
-            }, 1000)
-        }
+        this.myInterval = setInterval(() => {
+            const { seconds } = this.state
+
+            if (seconds > 0) {
+                this.setState(({ seconds }) => ({
+                    seconds: seconds - 1
+                }));
+            }
+            if (seconds === 0) {
+                this.props.timerEnd();
+                clearInterval(this.myInterval)
+            } 
+        }, 1000)
     }
 
     componentWillUnmount() {
@@ -36,11 +34,7 @@ export default class Timer extends Component {
     render() {
         const { seconds } = this.state
         return (
-            <div id="timer">
-                <p id="timertext" className="text-center">
-                    {this.props.isTurn ? `Time left: ${String(seconds).padStart(2, 0)} seconds` : "Waiting..."}
-                </p>       
-            </div>
+            <span>{`Time left: ${String(seconds).padStart(2, 0)} seconds`}</span>
         );
     }
 }

@@ -203,7 +203,7 @@ class Chatroom extends React.Component {
                 </ul>
                 <br />
                 <div className="d-flex justify-content-between gameinfo">
-                    {<Timer isTurn={isTurn} timerEnd={this.timerEnd}></Timer>}
+                    <p>{isTurn ? <Timer timerEnd={this.timerEnd}></Timer> : 'Waiting...'}</p>
                     <p>Lives Remaining: {lives}</p>
                 </div>
                 {form}
