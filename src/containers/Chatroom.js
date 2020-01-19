@@ -27,6 +27,7 @@ class Chatroom extends React.Component {
             chats: [],
             showNewGameBtn: true,
             isTurn: false,
+            lives: 0,
         };
 
         this.opponentUsername = DEFAULT_USER;
@@ -97,8 +98,9 @@ class Chatroom extends React.Component {
             this.setState({
                 showNewGameBtn: false,
                 isTurn: msgObj.isTurn,
+                lives: msgObj.lives,
             });
-            console.log('WHOS TURN', msgObj.isTurn);
+            
             this.opponentUsername = msgObj.oppUsername;
         });
 
@@ -118,10 +120,16 @@ class Chatroom extends React.Component {
         });
 
         subscribeToBadWord((err, msgObj) => {
-            this.setState({
+            let newState = {
                 chats: this.state.chats.concat({username: this.opponentUsername, content: msgObj.msg}),
-                isTurn: msgObj.isTurn
-            });
+                isTurn: msgObj.isTurn,
+            };
+
+            if (msgObj.lives !== undefined) {
+                newState.lives = msgObj.lives;
+            }
+
+            this.setState(newState);
         });
 
         subscribeToGameOver((err, msgObj) => {
@@ -132,6 +140,7 @@ class Chatroom extends React.Component {
                 }),
                 showNewGameBtn: true,
                 isTurn: false,
+                lives: 0,
             });
 
             this.opponentUsername = DEFAULT_USER;
@@ -148,7 +157,7 @@ class Chatroom extends React.Component {
 
     render() {
         const username = this.props.currentUser.user.username;
-        const { chats, showNewGameBtn, isTurn } = this.state;
+        const { chats, showNewGameBtn, isTurn, lives } = this.state;
         const rules = {
             username: DEFAULT_USER,
             content: `Welcome to a new game!! After an opponent is found, one player will say a word.
@@ -184,8 +193,8 @@ class Chatroom extends React.Component {
             <div>
                 <h3 className="text-center">Let's Play!</h3>         
                 <ul className="list-group" ref="chats">
-                <Message chat={rules} user={username} key={0} appMsg={true}/>
-                <Message chat={jpnRules} user={username} key={1} appMsg={true}/>
+                    <Message chat={rules} user={username} key={0} appMsg={true}/>
+                    <Message chat={jpnRules} user={username} key={1} appMsg={true}/>
                     {
                         chats.map((chat, i) => 
                             <Message chat={chat} user={username} key={i + 2} appMsg={false}/>
@@ -193,7 +202,10 @@ class Chatroom extends React.Component {
                     }
                 </ul>
                 <br />
-                {isTurn && <Timer timerEnd={this.timerEnd}></Timer>} 
+                <div className="d-flex justify-content-between gameinfo">
+                    {<Timer isTurn={isTurn} timerEnd={this.timerEnd}></Timer>}
+                    <p>Lives Remaining: {lives}</p>
+                </div>
                 {form}
             </div>
         );
