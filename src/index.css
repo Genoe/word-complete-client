@@ -47,13 +47,49 @@ ul.nav.navbar-nav li {
   align-items: center;
   justify-content: center;
   z-index: -1;
-  background-image: url("./images/brett-jordan-POMpXtcVYHo-unsplash.jpg");
+  background-image: url("./images/landing-3840.jpg");
   text-align: center;
   padding: 1rem;
   background-position: center center;
   background-size: cover;
   color: #fff;
   text-shadow: 0px 0 12px #000000;
+}
+
+@media only screen and (max-width: 1920px) {
+  .home-hero {
+    background-image: url("./images/landing-1920.jpg");
+  }
+}
+
+@media only screen and (max-width: 1600px) {
+  .home-hero {
+    background-image: url("./images/landing-1600.jpg");
+  }
+}
+
+@media only screen and (max-width: 1366px) {
+  .home-hero {
+    background-image: url("./images/landing-1366.jpg");
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .home-hero {
+    background-image: url("./images/landing-1024.jpg");
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .home-hero {
+    background-image: url("./images/landing-768.jpg");
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .home-hero {
+    background-image: url("./images/landing-640.jpg");
+  }
 }
 
 .navbar-header {
