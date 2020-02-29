@@ -7,7 +7,13 @@ const Homepage = ({ currentUser }) => {
         return (
             <div>
                 <div className="home-hero">
-                    <h1>What's Happening?</h1>
+                    <h1>
+                        do
+                        <span className="word-end">g</span>->
+                        <span className="word-start">g</span>am
+                        <span className="word-end">e</span>->
+                        <span className="word-start">e</span>arth
+                    </h1>
                     <h4>New to Word Complete?</h4>
                     <Link to="/signup" className="btn btn-primary">
                         Sign Up Here

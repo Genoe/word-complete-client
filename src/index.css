@@ -75,3 +75,11 @@ ul.nav.navbar-nav li {
   padding-left: 5%;
   padding-right: 5%;
 }
+
+.word-end {
+  color: #ff0000;
+}
+
+.word-start {
+  color: #00ff00;
+}
