@@ -62,3 +62,22 @@ export function putNewUsername(newUsername) {
         })
     }
 }
+
+export function requestPasswordReset(email) {
+    return (dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+
+            return apiCall('post', `/api/auth/resetpassword`, {
+                email
+            })
+            .then(({token, ...user}) => {
+                dispatch(removeError());
+                resolve();
+            })
+            .catch(err => {
+                dispatch(addError(err.message));
+                reject(); // indicate the API call failed
+            });
+        })
+    }
+}
