@@ -6,6 +6,7 @@ import AuthForm from '../components/AuthForm';
 import {authUser} from '../store/actions/auth';
 import {removeError} from '../store/actions/errors';
 import AccountForm from './AccountForm';
+import ResetPasswordForm from './ResetPasswordForm';
 
 const Main = props => {
     const {authUser, errors, removeError, currentUser} = props;
@@ -63,6 +64,16 @@ const Main = props => {
                             buttonText="Sign me up!"
                             heading="Join Word Complete today." 
                             {...props} 
+                        />
+                    );
+                }} />
+
+                <Route exact path="/resetpassword" render={props => {
+                    return (
+                        <ResetPasswordForm
+                            removeError={removeError}
+                            errors={errors}
+                            {...props}
                         />
                     );
                 }} />
