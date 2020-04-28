@@ -70,9 +70,9 @@ export function requestPasswordReset(email) {
             return apiCall('post', `/api/auth/resetpassword`, {
                 email
             })
-            .then(({token, ...user}) => {
+            .then(({message}) => {
                 dispatch(removeError());
-                resolve();
+                resolve(message);
             })
             .catch(err => {
                 dispatch(addError(err.message));

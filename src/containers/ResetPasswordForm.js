@@ -7,7 +7,8 @@ class ResetPasswordForm extends Component {
         super(props);
 
         this.state = {
-            email: ''
+            email: '',
+            message: ''
         };
     }
 
@@ -21,8 +22,10 @@ class ResetPasswordForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        this.props.requestPasswordReset(this.state.email).then(() => {
-            this.props.history.push('/');
+        this.props.requestPasswordReset(this.state.email).then((msg) => {
+            this.setState({
+                message: msg
+            });
         })
         .catch(() => {
             return;
@@ -30,7 +33,7 @@ class ResetPasswordForm extends Component {
     };
 
     render() {
-        const {email} = this.state;
+        const {email, message} = this.state;
         const {errors, history, removeError} = this.props;
 
         history.listen(() => {
@@ -45,6 +48,9 @@ class ResetPasswordForm extends Component {
                             <h2>Reset Your Password</h2>
                             {errors.message && (
                                 <div className="alert alert-danger">{errors.message.join(', ')}</div>
+                            )}
+                            {message && (
+                                <div className="alert alert-success">{message}</div>
                             )}
                             <label htmlFor="email">Email:</label>
                             <input 
