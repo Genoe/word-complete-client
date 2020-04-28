@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 export default class AuthForm extends Component {
     constructor(props) {
@@ -77,6 +78,7 @@ export default class AuthForm extends Component {
                                     />
                                 </div>
                             )}
+                            <p>Forgot Password? <Link to="/resetpassword">Click Here</Link></p>
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             {buttonText}
                         </button>

@@ -55,6 +55,7 @@ class ResetPasswordForm extends Component {
                                 value={email} 
                                 type="text"
                             />
+                            <br />
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             Submit
                         </button>

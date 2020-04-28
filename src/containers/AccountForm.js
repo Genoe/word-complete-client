@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom'
 import {putNewUsername} from '../store/actions/auth';
 
 class AccountForm extends Component {
@@ -52,9 +53,12 @@ class AccountForm extends Component {
                             value={this.state.newUsername}
                             onChange={e => this.setState({newUsername: e.target.value})}
                         />
+                        <br />
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             Update My Username!
                         </button>
+                        <br />
+                        <p>Want to reset your password? <Link to="/resetpassword">Click Here</Link></p>
                     </form>
                 </div>
             </div>
