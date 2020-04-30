@@ -5,11 +5,12 @@ import Homepage from '../components/Homepage';
 import AuthForm from '../components/AuthForm';
 import {authUser} from '../store/actions/auth';
 import {removeError} from '../store/actions/errors';
+import {removeNotification} from '../store/actions/notifications';
 import AccountForm from './AccountForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
 const Main = props => {
-    const {authUser, errors, removeError, currentUser} = props;
+    const {authUser, errors, removeError, currentUser, notifications, removeNotification} = props;
 
     // A wrapper for <Route> that redirects to the login
     // screen if you're not yet authenticated.
@@ -73,6 +74,7 @@ const Main = props => {
                         <ResetPasswordForm
                             removeError={removeError}
                             errors={errors}
+                            notifications={notifications}
                             {...props}
                         />
                     );
@@ -91,8 +93,9 @@ const Main = props => {
 function mapStateToProps(state) {
     return {
         currentUser: state.currentUser,
-        errors: state.errors
+        errors: state.errors,
+        notifications: state.notifications
     };
 }
 
-export default withRouter(connect(mapStateToProps, {authUser, removeError})(Main));
+export default withRouter(connect(mapStateToProps, {authUser, removeError, removeNotification})(Main));

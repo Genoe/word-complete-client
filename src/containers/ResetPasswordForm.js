@@ -8,7 +8,6 @@ class ResetPasswordForm extends Component {
 
         this.state = {
             email: '',
-            message: ''
         };
     }
 
@@ -23,9 +22,9 @@ class ResetPasswordForm extends Component {
         e.preventDefault();
 
         this.props.requestPasswordReset(this.state.email).then((msg) => {
-            this.setState({
-                message: msg
-            });
+            // this.setState({
+            //     message: msg
+            // });
         })
         .catch(() => {
             return;
@@ -33,8 +32,8 @@ class ResetPasswordForm extends Component {
     };
 
     render() {
-        const {email, message} = this.state;
-        const {errors, history, removeError, match} = this.props;
+        const {email} = this.state;
+        const {errors, history, removeError, match, notifications} = this.props;
 
         const emailInput = (
             <React.Fragment>
@@ -52,6 +51,7 @@ class ResetPasswordForm extends Component {
 
         const pwdInput = (
             <React.Fragment>
+                <div className="alert alert-info">After submitting your new password, you will be redirected to the sign-in page.</div>
                 <label htmlFor="password">Password:</label>
                 <input 
                     className="form-control" 
@@ -84,8 +84,8 @@ class ResetPasswordForm extends Component {
                             {errors.message && (
                                 <div className="alert alert-danger">{errors.message.join(', ')}</div>
                             )}
-                            {message && (
-                                <div className="alert alert-success">{message}</div>
+                            {notifications.notification && (
+                                <div className="alert alert-success">{notifications.notification.join(', ')}</div>
                             )}
                             {match.params.token ? pwdInput : emailInput}
                             <br />
@@ -102,7 +102,8 @@ class ResetPasswordForm extends Component {
 
 function mapStateToProps(state) {
     return {
-        errors: state.errors
+        errors: state.errors,
+        notifications: state.notifications
     };
 }
 

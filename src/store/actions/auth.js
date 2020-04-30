@@ -1,6 +1,7 @@
 import {apiCall, setTokenHeader} from '../../services/api';
 import {SET_CURRENT_USER} from '../actionTypes';
 import {addError, removeError} from './errors';
+import {addNotification, removeNotification} from './notifications';
 
 export function setCurrentUser(user) {
     return {
@@ -71,10 +72,12 @@ export function requestPasswordReset(email) {
                 email
             })
             .then(({message}) => {
+                dispatch(addNotification(['Please check your email!']));
                 dispatch(removeError());
                 resolve(message);
             })
             .catch(err => {
+                dispatch(removeNotification());
                 dispatch(addError(err.message));
                 reject(); // indicate the API call failed
             });
