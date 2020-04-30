@@ -34,7 +34,42 @@ class ResetPasswordForm extends Component {
 
     render() {
         const {email, message} = this.state;
-        const {errors, history, removeError} = this.props;
+        const {errors, history, removeError, match} = this.props;
+
+        const emailInput = (
+            <React.Fragment>
+                <label htmlFor="email">Email:</label>
+                <input 
+                    className="form-control" 
+                    id="email"
+                    name="email" 
+                    onChange={this.handleChange} 
+                    value={email} 
+                    type="text"
+                />
+            </React.Fragment>
+        );
+
+        const pwdInput = (
+            <React.Fragment>
+                <label htmlFor="password">Password:</label>
+                <input 
+                    className="form-control" 
+                    id="password"
+                    name="password" 
+                    onChange={this.handleChange} 
+                    type="password"
+                />
+                <label htmlFor="password-confirm">Please confirm your password:</label>
+                <input 
+                    className="form-control" 
+                    id="password-confirm"
+                    name="password-confirm" 
+                    onChange={this.handleChange} 
+                    type="password"
+                />
+            </React.Fragment>
+        )
 
         history.listen(() => {
             removeError();
@@ -52,15 +87,7 @@ class ResetPasswordForm extends Component {
                             {message && (
                                 <div className="alert alert-success">{message}</div>
                             )}
-                            <label htmlFor="email">Email:</label>
-                            <input 
-                                className="form-control" 
-                                id="email"
-                                name="email" 
-                                onChange={this.handleChange} 
-                                value={email} 
-                                type="text"
-                            />
+                            {match.params.token ? pwdInput : emailInput}
                             <br />
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             Submit
