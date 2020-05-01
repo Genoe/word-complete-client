@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {requestPasswordReset} from '../store/actions/auth';
 
-class ResetPasswordForm extends Component {
+export default class ResetPasswordForm extends Component {
     constructor(props) {
         super(props);
 
@@ -103,12 +101,3 @@ class ResetPasswordForm extends Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        errors: state.errors,
-        notifications: state.notifications
-    };
-}
-
-export default connect(mapStateToProps, {requestPasswordReset})(ResetPasswordForm);
