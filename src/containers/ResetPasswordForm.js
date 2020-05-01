@@ -8,6 +8,8 @@ class ResetPasswordForm extends Component {
 
         this.state = {
             email: '',
+            password: '',
+            passwordConfirm: ''
         };
     }
 
@@ -22,9 +24,7 @@ class ResetPasswordForm extends Component {
         e.preventDefault();
 
         this.props.requestPasswordReset(this.state.email).then((msg) => {
-            // this.setState({
-            //     message: msg
-            // });
+            return;
         })
         .catch(() => {
             return;
@@ -60,11 +60,11 @@ class ResetPasswordForm extends Component {
                     onChange={this.handleChange} 
                     type="password"
                 />
-                <label htmlFor="password-confirm">Please confirm your password:</label>
+                <label htmlFor="passwordConfirm">Please confirm your password:</label>
                 <input 
                     className="form-control" 
-                    id="password-confirm"
-                    name="password-confirm" 
+                    id="passwordConfirm"
+                    name="passwordConfirm" 
                     onChange={this.handleChange} 
                     type="password"
                 />
@@ -82,10 +82,14 @@ class ResetPasswordForm extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <h2>Reset Your Password</h2>
                             {errors.message && (
-                                <div className="alert alert-danger">{errors.message.join(', ')}</div>
+                                <div className="alert alert-danger">{errors.message.map((err) => {
+                                    return (<p>{err}</p>);
+                                })}</div>
                             )}
                             {notifications.notification && (
-                                <div className="alert alert-success">{notifications.notification.join(', ')}</div>
+                                <div className="alert alert-success">{notifications.notification.map((notification) => {
+                                    return (<p>{notification}</p>);
+                                })}</div>
                             )}
                             {match.params.token ? pwdInput : emailInput}
                             <br />
