@@ -84,3 +84,26 @@ export function requestPasswordReset(email) {
         })
     }
 }
+
+export function resetPassword(token, password, passwordConfirm) {
+    return (dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+
+            return apiCall('put', `/api/auth/resetpassword`, {
+                token,
+                password,
+                passwordConfirm
+            })
+            .then(({message}) => {
+                logout(); // user needs to re-login with their new password
+                dispatch(removeError());
+                resolve(message);
+            })
+            .catch(err => {
+                dispatch(removeNotification());
+                dispatch(addError(err.message));
+                reject(); // indicate the API call failed
+            });
+        })
+    }
+}

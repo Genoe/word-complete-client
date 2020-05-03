@@ -3,14 +3,14 @@ import {Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import Homepage from '../components/Homepage';
 import AuthForm from '../components/AuthForm';
-import {authUser, requestPasswordReset} from '../store/actions/auth';
+import {authUser, requestPasswordReset, resetPassword} from '../store/actions/auth';
 import {removeError} from '../store/actions/errors';
 import {removeNotification} from '../store/actions/notifications';
 import AccountForm from './AccountForm';
 import ResetPasswordForm from '../components/ResetPasswordForm';
 
 const Main = props => {
-    const {authUser, errors, removeError, currentUser, notifications, removeNotification, requestPasswordReset} = props;
+    const {authUser, errors, removeError, currentUser, notifications, removeNotification, requestPasswordReset, resetPassword} = props;
 
     // A wrapper for <Route> that redirects to the login
     // screen if you're not yet authenticated.
@@ -77,6 +77,7 @@ const Main = props => {
                             notifications={notifications}
                             removeNotification={removeNotification}
                             requestPasswordReset={requestPasswordReset}
+                            resetPassword={resetPassword}
                             {...props}
                         />
                     );
@@ -100,4 +101,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default withRouter(connect(mapStateToProps, {authUser, removeError, removeNotification, requestPasswordReset})(Main));
+export default withRouter(connect(mapStateToProps, {authUser, removeError, removeNotification, requestPasswordReset, resetPassword})(Main));

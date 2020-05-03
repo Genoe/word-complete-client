@@ -20,13 +20,24 @@ export default class ResetPasswordForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-
-        this.props.requestPasswordReset(this.state.email).then((msg) => {
-            return;
-        })
-        .catch(() => {
-            return;
-        });
+        const token = this.props.match.params.token;
+        const {password, passwordConfirm} = this.state;
+        
+        if (token) {
+            this.props.resetPassword(token, password, passwordConfirm).then(() => {
+                this.props.history.push('/signin');
+            })
+            .catch(() => {
+                return;
+            });
+        } else {
+            this.props.requestPasswordReset(this.state.email).then(() => {
+                return;
+            })
+            .catch(() => {
+                return;
+            });
+        } 
     };
 
     render() {
