@@ -20,7 +20,7 @@ export default class ResetPasswordForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const token = this.props.match.params.token;
+        const token = new URL(document.location).searchParams.get('token');
         const {password, passwordConfirm} = this.state;
         
         if (token) {
@@ -42,7 +42,8 @@ export default class ResetPasswordForm extends Component {
 
     render() {
         const {email} = this.state;
-        const {errors, history, removeError, match, notifications} = this.props;
+        const {errors, history, removeError, notifications} = this.props;
+        const token = new URL(document.location).searchParams.get('token');
 
         const emailInput = (
             <React.Fragment>
@@ -100,7 +101,7 @@ export default class ResetPasswordForm extends Component {
                                     return (<p>{notification}</p>);
                                 })}</div>
                             )}
-                            {match.params.token ? pwdInput : emailInput}
+                            {token ? pwdInput : emailInput}
                             <br />
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             Submit

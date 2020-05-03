@@ -69,7 +69,7 @@ const Main = props => {
                     );
                 }} />
 
-                <Route exact path={["/resetpassword","/resetpassword/:token"]} render={props => {
+                <Route exact path="/resetpassword" render={props => {
                     return (
                         <ResetPasswordForm
                             removeError={removeError}
