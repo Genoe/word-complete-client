@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
-import {putNewUsername} from '../store/actions/auth';
 
-class AccountForm extends Component {
+export default class AccountForm extends Component {
     _isMounted = false;
 
     constructor(props) {
@@ -13,26 +11,14 @@ class AccountForm extends Component {
         };
     }
 
-    componentDidMount() {
-        this._isMounted = true;
-    }
-
     handleNewUsername = event => {
         event.preventDefault();
-        this.props.putNewUsername(this.state.newUsername).then(() => {
-            if (this._isMounted) {
-                this.setState({newUsername: ''});
-            }
-            
+        this.props.putNewUsername(this.state.newUsername).then(() => {            
             this.props.history.push('/');
         })
         .catch(() => {
             return;
         });
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
     }
 
     // making a inline function for onChange instead of a generic handleChange function since we only have one input (for the sake of conciseness)
@@ -67,11 +53,3 @@ class AccountForm extends Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        errors: state.errors
-    };
-}
-
-export default connect(mapStateToProps, {putNewUsername})(AccountForm);

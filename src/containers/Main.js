@@ -3,14 +3,14 @@ import {Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import Homepage from '../components/Homepage';
 import AuthForm from '../components/AuthForm';
-import {authUser, requestPasswordReset, resetPassword} from '../store/actions/auth';
+import {authUser, requestPasswordReset, resetPassword, putNewUsername} from '../store/actions/auth';
 import {removeError} from '../store/actions/errors';
 import {removeNotification} from '../store/actions/notifications';
-import AccountForm from './AccountForm';
+import AccountForm from '../components/AccountForm';
 import ResetPasswordForm from '../components/ResetPasswordForm';
 
 const Main = props => {
-    const {authUser, errors, removeError, currentUser, notifications, removeNotification, requestPasswordReset, resetPassword} = props;
+    const {authUser, errors, removeError, currentUser, notifications, removeNotification, requestPasswordReset, resetPassword, putNewUsername} = props;
 
     // A wrapper for <Route> that redirects to the login
     // screen if you're not yet authenticated.
@@ -84,7 +84,10 @@ const Main = props => {
                 }} />
                 
                 <PrivateRoute  path="/users/:id/account"> 
-                    <AccountForm {...props}/>
+                    <AccountForm
+                        putNewUsername={putNewUsername}
+                        {...props}
+                    />
                 </PrivateRoute>
             </Switch>
         </div>
@@ -101,4 +104,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default withRouter(connect(mapStateToProps, {authUser, removeError, removeNotification, requestPasswordReset, resetPassword})(Main));
+export default withRouter(connect(mapStateToProps, {authUser, removeError, removeNotification, requestPasswordReset, resetPassword, putNewUsername})(Main));
