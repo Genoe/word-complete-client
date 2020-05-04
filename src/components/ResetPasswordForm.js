@@ -42,7 +42,7 @@ export default class ResetPasswordForm extends Component {
 
     render() {
         const {email} = this.state;
-        const {errors, history, removeError, notifications} = this.props;
+        const {errors, history, removeError, notifications, removeNotification} = this.props;
         const token = new URL(document.location).searchParams.get('token');
 
         const emailInput = (
@@ -83,6 +83,7 @@ export default class ResetPasswordForm extends Component {
 
         history.listen(() => {
             removeError();
+            removeNotification();
         });
 
         return (
