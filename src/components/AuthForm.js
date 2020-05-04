@@ -46,8 +46,8 @@ export default class AuthForm extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <h2>{heading}</h2>
                             {errors.message && (
-                                <div className="alert alert-danger">{errors.message.map((err) => {
-                                    return (<p>{err}</p>);
+                                <div className="alert alert-danger">{errors.message.map((err, i) => {
+                                    return (<p key={i}>{err}</p>);
                                 })}</div>
                             )}
                             <label htmlFor="email">Email:</label>

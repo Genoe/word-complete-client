@@ -42,8 +42,8 @@ class AccountForm extends Component {
                 <div className="col-md-6">
                     <form onSubmit={this.handleNewUsername}>
                         {this.props.errors.message && (
-                            <div className="alert alert-danger">{this.props.errors.message.map((err) => {
-                                return (<p>{err}</p>);
+                            <div className="alert alert-danger">{this.props.errors.message.map((err, i) => {
+                                return (<p key={i}>{err}</p>);
                             })}</div>
                         )}
                         <label htmlFor="username">Username:</label>

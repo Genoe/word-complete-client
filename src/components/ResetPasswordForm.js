@@ -93,13 +93,13 @@ export default class ResetPasswordForm extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <h2>Reset Your Password</h2>
                             {errors.message && (
-                                <div className="alert alert-danger">{errors.message.map((err) => {
-                                    return (<p>{err}</p>);
+                                <div className="alert alert-danger">{errors.message.map((err, i) => {
+                                    return (<p key={i}>{err}</p>);
                                 })}</div>
                             )}
                             {notifications.notification && (
-                                <div className="alert alert-success">{notifications.notification.map((notification) => {
-                                    return (<p>{notification}</p>);
+                                <div className="alert alert-success">{notifications.notification.map((notification, i) => {
+                                    return (<p key={i}>{notification}</p>);
                                 })}</div>
                             )}
                             {token ? pwdInput : emailInput}
