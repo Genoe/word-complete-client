@@ -95,7 +95,7 @@ export function resetPassword(token, password, passwordConfirm) {
                 passwordConfirm
             })
             .then(({message}) => {
-                logout(); // user needs to re-login with their new password
+                dispatch(logout()); // user needs to re-login with their new password
                 dispatch(removeError());
                 resolve(message);
             })
