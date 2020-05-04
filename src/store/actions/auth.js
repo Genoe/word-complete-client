@@ -72,7 +72,7 @@ export function requestPasswordReset(email) {
                 email
             })
             .then(({message}) => {
-                dispatch(addNotification(['Please check your email and follow the instructions.', 'You can close this window.']));
+                dispatch(addNotification(message));
                 dispatch(removeError());
                 resolve(message);
             })
