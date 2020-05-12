@@ -8,6 +8,7 @@ import {removeError} from '../store/actions/errors';
 import {removeNotification} from '../store/actions/notifications';
 import AccountForm from '../components/AccountForm';
 import ResetPasswordForm from '../components/ResetPasswordForm';
+import NoMatch from '../components/NoMatch';
 
 const Main = props => {
     const {authUser, errors, removeError, currentUser, notifications, removeNotification, requestPasswordReset, resetPassword, putNewUsername} = props;
@@ -89,6 +90,9 @@ const Main = props => {
                         {...props}
                     />
                 </PrivateRoute>
+                <Route path="*">
+                    <NoMatch />
+                </Route>
             </Switch>
         </div>
     );
