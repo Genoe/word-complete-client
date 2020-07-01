@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 export default class AuthForm extends Component {
     constructor(props) {
@@ -8,7 +9,8 @@ export default class AuthForm extends Component {
         this.state = {
             email: '',
             username: '',
-            password: ''
+            password: '',
+            captchaToken: '',
         };
     }
 
@@ -30,6 +32,13 @@ export default class AuthForm extends Component {
             return;
         });
     };
+
+    captchaChg = e => {
+        console.log('CAPTCHA VAL', e);
+        this.setState({
+            captchaToken: e
+        });
+    }
 
     render() {
         const {email, username} = this.state;
@@ -80,6 +89,10 @@ export default class AuthForm extends Component {
                                     />
                                 </div>
                             )}
+                            <ReCAPTCHA
+                                sitekey="6LeIPasZAAAAAGmDIpz9lyxjQVV7S0Lq4NqMayVS"
+                                onChange={this.captchaChg}
+                            />
                             <p>Forgot Password? <Link to="/resetpassword">Click Here</Link></p>
                         <button type="submit" className="btn btn-primary btn-block btn-lg">
                             {buttonText}
