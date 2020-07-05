@@ -41,7 +41,7 @@ export default class AuthForm extends Component {
     }
 
     render() {
-        const {email, username} = this.state;
+        const {email, username, captchaToken} = this.state;
         const {heading, buttonText, signUp, errors, history, removeError} = this.props;
 
         history.listen(() => {
@@ -90,13 +90,14 @@ export default class AuthForm extends Component {
                                 </div>
                             )}
                             <ReCAPTCHA
-                                sitekey="6LeIPasZAAAAAGmDIpz9lyxjQVV7S0Lq4NqMayVS"
+                                className="recaptcha"
+                                sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
                                 onChange={this.captchaChg}
                             />
                             <p>Forgot Password? <Link to="/resetpassword">Click Here</Link></p>
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">
-                            {buttonText}
-                        </button>
+                            <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={!captchaToken}>
+                                {buttonText}
+                            </button>
                         </form>
                     </div>
                 </div>
