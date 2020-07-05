@@ -119,3 +119,8 @@ ul.nav.navbar-nav li {
 .word-start {
   color: #00ff00;
 }
+
+.recaptcha {
+  display: inline-block;
+  margin: 10px;
+}
