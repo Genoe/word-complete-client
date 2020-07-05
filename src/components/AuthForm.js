@@ -33,13 +33,6 @@ export default class AuthForm extends Component {
         });
     };
 
-    captchaChg = e => {
-        console.log('CAPTCHA VAL', e);
-        this.setState({
-            captchaToken: e
-        });
-    }
-
     render() {
         const {email, username, captchaToken} = this.state;
         const {heading, buttonText, signUp, errors, history, removeError} = this.props;
@@ -92,7 +85,7 @@ export default class AuthForm extends Component {
                             <ReCAPTCHA
                                 className="recaptcha"
                                 sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
-                                onChange={this.captchaChg}
+                                onChange={(e) => this.setState({ captchaToken: e })}
                             />
                             <p>Forgot Password? <Link to="/resetpassword">Click Here</Link></p>
                             <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={!captchaToken}>
