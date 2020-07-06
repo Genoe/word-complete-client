@@ -75,6 +75,14 @@ export default class AuthForm extends Component {
                             />
                             {signUp && (
                                 <div>
+                                    <label htmlFor="password">Confirm Password:</label>
+                                    <input 
+                                        className="form-control" 
+                                        id="passwordConfirm"
+                                        name="passwordConfirm" 
+                                        onChange={this.handleChange} 
+                                        type="password"
+                                    />
                                     <label htmlFor="username">Username:</label>
                                     <input 
                                         className="form-control" 
