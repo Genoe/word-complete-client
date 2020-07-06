@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+
+const recaptchaRef = React.createRef();
 
 export default class ResetPasswordForm extends Component {
     constructor(props) {
@@ -7,7 +10,8 @@ export default class ResetPasswordForm extends Component {
         this.state = {
             email: '',
             password: '',
-            passwordConfirm: ''
+            passwordConfirm: '',
+            captchaToken: '',
         };
     }
 
@@ -21,27 +25,31 @@ export default class ResetPasswordForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
         const token = new URL(document.location).searchParams.get('token');
-        const {password, passwordConfirm} = this.state;
+        const {password, passwordConfirm, email, captchaToken} = this.state;
         
         if (token) {
-            this.props.resetPassword(token, password, passwordConfirm).then(() => {
+            this.props.resetPassword(token, password, passwordConfirm, captchaToken).then(() => {
                 this.props.history.push('/signin');
             })
             .catch(() => {
+                recaptchaRef.current.reset();
+                this.setState({ captchaToken: '' });
                 return;
             });
         } else {
-            this.props.requestPasswordReset(this.state.email).then(() => {
+            this.props.requestPasswordReset(email, captchaToken).then(() => {
                 return;
             })
             .catch(() => {
+                recaptchaRef.current.reset();
+                this.setState({ captchaToken: '' });
                 return;
             });
         } 
     };
 
     render() {
-        const {email} = this.state;
+        const {email, captchaToken} = this.state;
         const {errors, history, removeError, notifications, removeNotification} = this.props;
         const token = new URL(document.location).searchParams.get('token');
 
@@ -61,7 +69,6 @@ export default class ResetPasswordForm extends Component {
 
         const pwdInput = (
             <React.Fragment>
-                <div className="alert alert-info">After submitting your new password, you will be redirected to the sign-in page.</div>
                 <label htmlFor="password">Password:</label>
                 <input 
                     className="form-control" 
@@ -103,8 +110,13 @@ export default class ResetPasswordForm extends Component {
                                 })}</div>
                             )}
                             {token ? pwdInput : emailInput}
-                            <br />
-                        <button type="submit" className="btn btn-primary btn-block btn-lg">
+                            <ReCAPTCHA
+                                className="recaptcha"
+                                sitekey={process.env.REACT_APP_RECAPTCHA_PUBLIC_KEY}
+                                onChange={(e) => this.setState({ captchaToken: e })}
+                                ref={recaptchaRef}
+                            />
+                        <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={ !captchaToken }>
                             Submit
                         </button>
                         </form>

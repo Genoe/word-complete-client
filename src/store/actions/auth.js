@@ -64,12 +64,13 @@ export function putNewUsername(newUsername) {
     }
 }
 
-export function requestPasswordReset(email) {
+export function requestPasswordReset(email, captchaToken) {
     return (dispatch, getState) => {
         return new Promise((resolve, reject) => {
 
             return apiCall('post', `/api/auth/resetpassword`, {
-                email
+                email,
+                captchaToken,
             })
             .then(({message}) => {
                 dispatch(addNotification(message));
@@ -85,14 +86,15 @@ export function requestPasswordReset(email) {
     }
 }
 
-export function resetPassword(token, password, passwordConfirm) {
+export function resetPassword(token, password, passwordConfirm, captchaToken) {
     return (dispatch, getState) => {
         return new Promise((resolve, reject) => {
 
             return apiCall('put', `/api/auth/resetpassword`, {
                 token,
                 password,
-                passwordConfirm
+                passwordConfirm,
+                captchaToken,
             })
             .then(({message}) => {
                 dispatch(logout()); // user needs to re-login with their new password
