@@ -71,6 +71,7 @@ class Chatroom extends React.Component {
             emitMessage(word, () => {
                 this.setState({
                     isTurn: !this.state.isTurn,
+                    word: '',
                     chats: this.state.chats.concat([{
                         username: this.props.currentUser.user.username,
                         content: word.toLowerCase(),
