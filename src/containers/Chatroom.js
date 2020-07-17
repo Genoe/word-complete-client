@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { 
     subscribeToChat, 
     emitMessage, 
-    emitUsername,
+    emitUserData,
     emitTimerEnd, 
     subscribeToMatchingService, 
     subscribeToMatchFound, 
@@ -162,7 +162,10 @@ class Chatroom extends React.Component {
             disconnect();
         });
 
-        emitUsername(this.props.currentUser.user.username);
+        emitUserData({
+            username: this.props.currentUser.user.username,
+            id: this.props.currentUser.user.id
+        });
     };
 
     timerEnd = () => {

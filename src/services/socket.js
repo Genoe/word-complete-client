@@ -31,9 +31,9 @@ export function emitMessage(msg, cb) {
   cb();
 }
 
-// send out the username
-export function emitUsername(username) {
-  socket.emit('username', username);
+// send out the username and database id
+export function emitUserData(data) {
+  socket.emit('userdata', data);
 }
 
 // server will say a match has been found
